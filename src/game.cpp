@@ -8,16 +8,9 @@ Renderer *renderer;
 Shader selected_shader;
 
 BgObject *bg_floor;
-
 PlayerObject *player;
-
-GameObject *cloud_1;
-GameObject *cloud_2;
-GameObject *cloud_3;
-
-GameObject *cactus_1;
-GameObject *cactus_2;
-GameObject *cactus_3;
+GameObject *cloud_1, *cloud_2, *cloud_3;
+EnemyObject *cactus_1, *cactus_2, *cactus_3;
 
 GameState current = ACTIVE;
 
@@ -62,7 +55,7 @@ void Game::init()
 	Resources::assign_texture("../src/textures/dino_chrome_cloud.png", GL_TRUE, "cloud_1");
 	Resources::assign_texture("../src/textures/dino_chrome_cactus_1.png", GL_TRUE, "cactus_1");
 
-	vec2 PLAYER_SIZE(200, 215);
+	vec2 PLAYER_SIZE(800, 215);
 	vec2 CLOUD_1_SIZE(230, 70);
 	vec2 CLOUD_2_SIZE(230, 70);
 	vec2 CLOUD_3_SIZE(230, 70);
@@ -70,7 +63,7 @@ void Game::init()
 	
 	vec2 player_pos = vec2(
 		0,
-		(this->ref_height - BASE_LINE)
+		PLAYER_BASE_LINE
 	);
 
 	vec2 cloud_1_pos(
@@ -99,7 +92,8 @@ void Game::init()
 	cloud_2 	= new GameObject(Resources::get_texture("cloud_1"), vec2(0.f, 0.f), cloud_2_pos, 	CLOUD_2_SIZE, 1.f, vec3(1.f), vec2(1.5f, 0.f));
 	cloud_3 	= new GameObject(Resources::get_texture("cloud_1"), vec2(0.f, 0.f), cloud_3_pos, 	CLOUD_3_SIZE, 1.f, vec3(1.f), vec2(4.f, 0.f));
 
-	cactus_1 	= new GameObject(Resources::get_texture("cactus_1"), 	vec2(0.f, 0.f), cactus_1_pos, CACTUS_1_SIZE);
+	cactus_1 	= new EnemyObject(Resources::get_texture("cactus_1"), cactus_1_pos, CACTUS_1_SIZE);
+	// cactus_1 	= new GameObject(Resources::get_texture("cactus_1"), 	vec2(0.f, 0.f), cactus_1_pos, CACTUS_1_SIZE);
 	player 		=	new PlayerObject(Resources::get_texture("character"), player_pos);
 }
 
@@ -108,6 +102,8 @@ void Game::handle_input(GLfloat delta, GLint movement, GLboolean action, GLint w
 	// TODO: Refactor para ficar apenas com um botao (implementar "gravidade"(?))
 	if (current == ACTIVE)
 	{
+		// player->obj_position.x += (player->obj_velocity.y * 0.33f);
+
 		if (movement == 1)
 		{
 			if (player->obj_position.y > PLAYER_MAX_HEIGHT && !player->descending)
@@ -142,27 +138,26 @@ void Game::update()
 		bg_floor->fixed = false;
 
 		cloud_1->obj_position.x -= cloud_1->obj_velocity.x;
-
 		if (cloud_1->obj_position.x <= -5999.0f) {
-			cloud_1->obj_position.x = this->ref_width + 15.0f;
-			cloud_1->obj_position = vec2(this->ref_width + 150, rand() % 215 + 1);
+			cloud_1->obj_position.x = this->ref_width;
+			cloud_1->obj_position.y = rand() % 215 + 1; 
 		}
 
 		cloud_2->obj_position.x -= cloud_2->obj_velocity.x;
-
 		if (cloud_2->obj_position.x <= -5999.0f) {
-			cloud_2->obj_position.x = this->ref_width + 15.0f;
-			cloud_2->obj_position = vec2(this->ref_width + 700, rand() % 215 + 1);
+			cloud_2->obj_position.x = this->ref_width;
+			cloud_2->obj_position.y = rand() % 215 + 1;
 		}
 
 		cloud_3->obj_position.x -= cloud_3->obj_velocity.x;
-
 		if (cloud_3->obj_position.x <= -5999.0f) {
 			cloud_3->obj_position.x = this->ref_width + 15.0f;
-			cloud_2->obj_position = vec2(this->ref_width + 1975, rand() % 215 + 1);
+			cloud_3->obj_position.y = rand() % 215 + 1;
 		}
 
 		bg_floor->move(bg_floor);
+		cactus_1->move(cactus_1);
+		
 		player->obj_offset += vec2(1.f / 4.f, 1.f);
 
 		this->assert_collisions();
@@ -187,18 +182,14 @@ void Game::build()
 
 GLboolean Game::check_collision(GameObject &a, GameObject &b)
 {
-	GLboolean collide = a.obj_position.x >= (b.obj_position.x - (b.obj_size.x * 2.45f));
-	// string has_collide = collide ? "BATEU": "NAO BATEU";
-	// cout 	<< "a.obj_position.x >= b.obj_position.x " 
-	// 			<< has_collide << std::endl
-	// 			<< "a.obj_position.x: "
-	// 			<< a.obj_position.x
-	// 			<< " b.obj_position.x: "
-	// 			<< b.obj_position.x
-	// 			<< " "
-	// 			<< std::endl;
-	
-	return collide;
+	GLfloat b_initial = b.obj_size.x * 2.5f;
+	GLfloat b_final = b.obj_size.x * 1.5f;
+
+	GLboolean collide_x = a.obj_position.x >= (b.obj_position.x - b_initial)
+						&& a.obj_position.x <= (b.obj_position.x - b_final);
+
+	if (collide_x && a.obj_position.y == PLAYER_BASE_LINE) return GL_TRUE;
+	else return GL_FALSE;
 }
 
 void Game::assert_collisions()

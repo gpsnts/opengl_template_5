@@ -15,7 +15,6 @@ public:
 	GLboolean fixed = true;
 	bool jumping 		=	false;
 	bool descending = false;
-	GLint jump_frames = 0, movement_controller = 0;
 	GLfloat texture_pos_x = 1.f / 4.f;
 
 	PlayerObject()

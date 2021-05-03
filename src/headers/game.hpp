@@ -14,6 +14,7 @@
 
 #include "game_object.hpp"
 #include "bg_object.hpp"
+#include "enemy_object.hpp"
 #include "player_object.hpp"
 #include "shader.hpp"
 #include "renderer.hpp"
