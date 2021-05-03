@@ -16,9 +16,9 @@ using namespace glm;
 class GameObject
 {
 public:
-	vec2 obj_position, obj_size, obj_velocity;
+	vec2 obj_position, obj_size, obj_velocity, obj_offset;
   vec3 obj_color;
-  GLfloat obj_rotation;
+  GLfloat obj_rotation, obj_z_index;
   GLboolean is_solid;
   GLboolean is_deleted;
   Texture sprite;
@@ -26,7 +26,9 @@ public:
 	GameObject() :
 	sprite() {
 		this->obj_position 	= vec2(0.f, 0.f);
+		this->obj_offset		=	vec2(1.f, 1.f);
 		this->obj_size 			=	vec2(1.f, 1.f);
+		this->obj_z_index		=	1.f;
 		this->obj_velocity 	= vec2(0.f, 0.f);
 		this->obj_color			= vec3(1.f, 1.f, 1.f);
 		this->obj_rotation 	=	0.f;
@@ -36,14 +38,18 @@ public:
 
 	GameObject(
 		Texture s_sprite,
+		vec2 s_offset,
 		vec2 s_pos,
 		vec2 s_size,
+		GLfloat s_z_index = 1.f,
 		vec3 s_color = vec3(1.f),
 		vec2 s_velocity = vec2(0.f, 0.f)
 	) 
 	{
 		this->obj_position 	= s_pos;
+		this->obj_offset		=	s_offset;
 		this->obj_size			=	s_size;
+		this->obj_z_index 	=	s_z_index;
 		this->obj_velocity 	=	s_velocity;
 		this->obj_color			=	s_color;
 		this->obj_rotation	=	0.f;

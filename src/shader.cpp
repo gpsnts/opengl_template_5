@@ -102,3 +102,9 @@ void Shader::set_int(const GLchar *name, GLint value, GLboolean useShader)
   glUniform1i(glGetUniformLocation(this->program, name), value);
 }
 
+void Shader::set_float(const GLchar *name, GLfloat value, GLboolean useShader)
+{
+	if (useShader) this->use();
+	glUniform1f(glGetUniformLocation(this->program, name), value);
+}
+

@@ -35,6 +35,7 @@ public:
 	void set_mat4(const GLchar *name, const mat4 &matrix, GLboolean useShader = false);
 	void set_vec3(const GLchar *name, GLfloat x, GLfloat y, GLfloat z, GLboolean useShader = false);
   void set_vec3(const GLchar *name, const glm::vec3 &value, GLboolean useShader = false);
+	void set_float(const GLchar *name, GLfloat value, GLboolean useShader = false);
 };
 
 #endif // __SHADER_HPP__

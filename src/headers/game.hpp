@@ -13,7 +13,6 @@
 #include "game_object.hpp"
 #include "shader.hpp"
 #include "renderer.hpp"
-#include "render.hpp"
 #include "resources.hpp"
 
 class Game

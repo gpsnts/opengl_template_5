@@ -9,7 +9,7 @@ GameObject *player;
 GameObject *cloud_1;
 GameObject *cactus_1;
 
-const GLfloat PLAYER_VELOCITY(375.f);
+const GLfloat PLAYER_VELOCITY(150.f);
 
 Game::~Game()
 {
@@ -43,12 +43,12 @@ void Game::init()
 	sprite = Resources::get_shader("tga");
 	renderer = new Renderer(sprite);
 	
-	Resources::assign_texture("../src/textures/dino_chrome_dinossaur.png", GL_TRUE, "character");
+	Resources::assign_texture("../src/textures/dino_chrome_spreadsheet_v2.png", GL_TRUE, "character");
 	Resources::assign_texture("../src/textures/dino_chrome_floor_compose.png", GL_TRUE, "floor_asset");
 	Resources::assign_texture("../src/textures/dino_chrome_cloud.png", GL_TRUE, "cloud_1");
 	Resources::assign_texture("../src/textures/dino_chrome_cactus_1.png", GL_TRUE, "cactus_1");
 
-	vec2 PLAYER_SIZE(200, 215);
+	vec2 PLAYER_SIZE(800, 215);
 	vec2 CLOUD_1_SIZE(230, 70);
 	vec2 CACTUS_1_SIZE(84, 150);
 	
@@ -67,9 +67,9 @@ void Game::init()
 		(this->ref_height - (BASE_LINE - 65.f))
 	);
 
-	cloud_1 	= new GameObject(Resources::get_texture("cloud_1"), cloud_1_pos, CLOUD_1_SIZE);
-	cactus_1 	= new GameObject(Resources::get_texture("cactus_1"), cactus_1_pos, CACTUS_1_SIZE);
-	player 		= new GameObject(Resources::get_texture("character"), player_pos, PLAYER_SIZE);
+	cloud_1 	= new GameObject(Resources::get_texture("cloud_1"), vec2(1.f, 1.f), cloud_1_pos, CLOUD_1_SIZE);
+	cactus_1 	= new GameObject(Resources::get_texture("cactus_1"), vec2(1.f, 1.f), cactus_1_pos, CACTUS_1_SIZE);
+	player 		= new GameObject(Resources::get_texture("character"), vec2(1.f, 1.f), player_pos, PLAYER_SIZE, 2.f);
 }
 
 void Game::handle_input(GLfloat delta, GLint movement, GLboolean action, GLint width, GLint height)
@@ -87,6 +87,7 @@ void Game::handle_input(GLfloat delta, GLint movement, GLboolean action, GLint w
   {
     if (player->obj_position.x <=  width - player->obj_size.x) {
       player->obj_position.x += velocity;
+			player->obj_offset += vec2(1.f / 4.f, 1.f);
     }
   }
 }
@@ -100,7 +101,7 @@ void Game::build()
 {
 	Texture text_floor;
 	text_floor = Resources::get_texture("floor_asset");
-	renderer->draw_texture(text_floor, vec2(0, (this->ref_height - 320)), vec2(6000, 320));
+	renderer->draw_texture(text_floor, vec2(1.f, 1.f), vec2(0, (this->ref_height - 320)), -1.f, vec2(6000, 320));
 
 	cloud_1->draw(*renderer);
 	cactus_1->draw(*renderer);
