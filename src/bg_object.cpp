@@ -2,12 +2,10 @@
 
 void BgObject::move(BgObject *bg)
 {
-	std::cout << "bg->obj_position.x -  " << bg->obj_position.x << std::endl;
-
 	if (!bg->fixed) {
 		bg->obj_position.x -= bg->obj_velocity.x;
 
-		if (bg->obj_position.x <= -4750.0f) {
+		if (bg->obj_position.x <= -3999.0f) {
 			bg->obj_position.x = 0.0f;
 		}
 	}

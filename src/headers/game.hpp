@@ -14,9 +14,15 @@
 
 #include "game_object.hpp"
 #include "bg_object.hpp"
+#include "player_object.hpp"
 #include "shader.hpp"
 #include "renderer.hpp"
 #include "resources.hpp"
+
+enum GameState {
+	ACTIVE,
+	GAME_OVER
+};
 
 class Game
 {
@@ -37,6 +43,9 @@ public:
 	void init();
 	void build();
 	void update();
+
+	GLboolean check_collision(GameObject &a, GameObject &b);
+	void assert_collisions();
 };
 
 #endif // __GAME_HPP__
