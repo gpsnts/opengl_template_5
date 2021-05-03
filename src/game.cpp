@@ -1,6 +1,8 @@
 #include "headers/game.hpp"
 
 #define BASE_LINE (215.f + 55.47225f)
+#define PLAYER_BASE_LINE 497.528f
+#define PLAYER_MAX_HEIGHT 272.528f
 
 Renderer *renderer;
 Shader selected_shader;
@@ -9,8 +11,6 @@ BgObject *bg_floor;
 
 PlayerObject *player;
 
-
-// GameObject *player;
 GameObject *cloud_1;
 GameObject *cloud_2;
 GameObject *cloud_3;
@@ -101,28 +101,42 @@ void Game::init()
 
 	cactus_1 	= new GameObject(Resources::get_texture("cactus_1"), 	vec2(0.f, 0.f), cactus_1_pos, CACTUS_1_SIZE);
 	player 		=	new PlayerObject(Resources::get_texture("character"), player_pos);
-	// player 		= new GameObject(Resources::get_texture("character"), vec2(1.f, 1.f), player_pos, 	PLAYER_SIZE, 2.f);
 }
 
 void Game::handle_input(GLfloat delta, GLint movement, GLboolean action, GLint width, GLint height)
 {
-	GLfloat velocity = PLAYER_VELOCITY * delta;
-
+	// TODO: Refactor para ficar apenas com um botao (implementar "gravidade"(?))
 	if (current == ACTIVE)
 	{
 		if (movement == 1)
 		{
-			player->jumping = true;
-			player->jump();
+			if (player->obj_position.y > PLAYER_MAX_HEIGHT && !player->descending)
+			{
+				player->obj_position.y -= player->obj_velocity.y;
+				if (player->obj_position.y <= PLAYER_MAX_HEIGHT) player->descending = true;
+			}
+		}
+		
+
+		if (movement == -1)
+		{
+			if (player->descending)
+			{
+				if (player->obj_position.y < PLAYER_BASE_LINE)
+				{
+					player->obj_position.y += (player->obj_velocity.y * 0.1f);
+					if (player->obj_position.y = PLAYER_BASE_LINE)
+					{
+						player->descending = false;
+					}
+				}
+			}
 		}
 	}
 }
 
 void Game::update()
 {
-	std::cout << "FIRST: " << player->obj_position.y << std::endl;
-	std::cout << "PLAYER_BASE_LINE: " << PLAYER_BASE_LINE << std::endl;
-
 	if (current == ACTIVE)
 	{
 		bg_floor->fixed = false;

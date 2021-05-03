@@ -43,14 +43,8 @@ int main(int argc, char *argv[])
 		
 		Application::process_input(app->get_window());
 
-    // if (glfwGetKey(app->get_window(), GLFW_KEY_LEFT) == GLFW_PRESS) movement = -1;
-
     if (glfwGetKey(app->get_window(), GLFW_KEY_UP) == GLFW_PRESS) movement = 1;
-
-    // if ((glfwGetKey(app->get_window(), GLFW_KEY_LEFT) != GLFW_PRESS)
-		// 		 && (glfwGetKey(app->get_window(), GLFW_KEY_RIGHT) != GLFW_PRESS)) movement = 0;
-
-    // if (glfwGetKey(app->get_window(), GLFW_KEY_SPACE) == GLFW_PRESS) action = true;
+		if (glfwGetKey(app->get_window(), GLFW_KEY_RIGHT) == GLFW_PRESS) movement = -1;
 
 		glfwPollEvents();
 
