@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -11,6 +13,7 @@
 #include <glm/ext.hpp>
 
 #include "game_object.hpp"
+#include "bg_object.hpp"
 #include "shader.hpp"
 #include "renderer.hpp"
 #include "resources.hpp"

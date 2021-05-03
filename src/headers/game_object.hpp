@@ -59,6 +59,7 @@ public:
 	};
 
 	virtual void draw(Renderer &renderer);
+	virtual void draw_offset(Renderer &renderer, vec2 offset = vec2(0.f, 0.f));
 };
 
 #endif // __GAME_OBJECT_HPP__
