@@ -93,7 +93,7 @@ void Game::init()
 	cloud_3 	= new GameObject(Resources::get_texture("cloud_1"), vec2(0.f, 0.f), cloud_3_pos, 	CLOUD_3_SIZE, 1.f, vec3(1.f), vec2(4.f, 0.f));
 
 	cactus_1 	= new EnemyObject(Resources::get_texture("cactus_1"), cactus_1_pos, CACTUS_1_SIZE);
-	// cactus_1 	= new GameObject(Resources::get_texture("cactus_1"), 	vec2(0.f, 0.f), cactus_1_pos, CACTUS_1_SIZE);
+
 	player 		=	new PlayerObject(Resources::get_texture("character"), player_pos);
 }
 
@@ -102,8 +102,6 @@ void Game::handle_input(GLfloat delta, GLint movement, GLboolean action, GLint w
 	// TODO: Refactor para ficar apenas com um botao (implementar "gravidade"(?))
 	if (current == ACTIVE)
 	{
-		// player->obj_position.x += (player->obj_velocity.y * 0.33f);
-
 		if (movement == 1)
 		{
 			if (player->obj_position.y > PLAYER_MAX_HEIGHT && !player->descending)

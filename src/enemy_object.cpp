@@ -2,14 +2,6 @@
 
 void EnemyObject::move(EnemyObject *enemy)
 {
-	// f (!bg->fixed) {
-	// 	bg->obj_position.x -= bg->obj_velocity.x;
-
-	// 	if (bg->obj_position.x <= -3999.0f) {
-	// 		bg->obj_position.x = 0.0f;
-	// 	}
-	// }
-	
 	if (!enemy->fixed)
 	{
 		enemy->obj_position.x -= enemy->obj_velocity.x;
