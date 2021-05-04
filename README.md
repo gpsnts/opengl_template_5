@@ -1,4 +1,4 @@
-# **opengl_template_3**
+# opengl_template_ga
 
 ## **IMPORTANT**
 
@@ -24,7 +24,5 @@ Add a `show_fps` arg to show info about the app. E.g `./run show_fps`
 
 | Movement | Keyboard Arrow |
 |----------|----------------|
-| Left     | ←              |
-| Right    | →              |
-| Up       | ↑              |
-| Down     | ↓              |
+| Down     | →              |
+| Jump     | ↑              |

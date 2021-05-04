@@ -111,7 +111,6 @@ void Game::handle_input(GLfloat delta, GLint movement, GLboolean action, GLint w
 			}
 		}
 		
-
 		if (movement == -1)
 		{
 			if (player->descending)
